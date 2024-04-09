@@ -75,24 +75,22 @@ function PostAProduct({data}:any) {
                             <div className="col-md-12"><label className="labels">Description</label><input type="text" className="form-control" placeholder="enter discription" name= "description" value={product_info.description} onChange={handleChange} required/></div>
                             <div className="col-md-12"><label className="labels">Price</label><input type="text" className="form-control" placeholder="enter price" name= "price" value={product_info.price} onChange={handleChange} required/></div>
                             <div className="col-md-12"><label className="labels">Image_link</label><input type="file" className="form-control" placeholder="enter imagelink" name= "imagelink" accept="image/*" onChange={handleChange} required/></div>
-                            <div className="col-md-12"><label className="labels">Category</label><input type="text" className="form-control" placeholder="enter Category" name= "Category" value={product_info.Category} onChange={handleChange} required/></div>
+
+                            <div className="col-md-12"><label className="labels">Category</label>
+                            <select className="form-control" name= "Category" value={product_info.Category} onChange={handleChange} required>
+                                <option value={"tshirts"}>T shirts</option>
+                                <option value={"gadgets"}>Gadgets</option>
+
+                                <option value={"bracelets"}>Bracelets</option>
+
+                            </select>
+                            
+                            </div>
                         </div>
-                        <div className="mt-5 text-center"><button className="btn btn-primary profile-button" type="button" onClick={handleSubmit}>Post Product</button></div>
+                        <div className="mt-5 text-center"><button className="btn btn-primary " type="button" onClick={handleSubmit}>Post Product</button></div>
                     </div>
                 </div>
-                <div className="col-md-4">
-                    <div className="p-3 py-5">
-                        <div className="d-flex justify-content-between align-items-center experience">
-                            <span>Your Products</span>
-                            <ul>
-                                {recentUser.products.map((product:ProductInfo, index:number) => (
-                                <li key={index}>
-                                    {product.productId}
-                                </li>
-                                ))}
-                            </ul></div>
-                    </div>
-                </div>
+            
              </div>
         </div>
     )

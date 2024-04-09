@@ -74,7 +74,6 @@ export interface PostAProduct {
 
 export interface User {
   username: string;
-  email: string;
   password: string;
   address: string;
   account_type: "admin" | "normal";
@@ -83,9 +82,3 @@ export interface User {
 }
 //at the end
 
-export interface EditUser {
-  username: string;
-  email: string;
-  address: string;
-  profile_image_link: string;
-}
