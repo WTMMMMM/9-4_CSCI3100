@@ -62,10 +62,16 @@ export interface Analytics {
   gadgets: AnalyticsCategory;
 }
 
+export interface ChartData {
+  label: string;
+  data: number[];
+  borderColor: string;
+  backgroundColor: string;
+}
 //Bruce
 
 export interface PostAProduct {
-  productname:string;
+  productname: string;
   description: string;
   price: number;
   image_link: string;
@@ -81,4 +87,24 @@ export interface User {
   products: ProductInfo[];
 }
 //at the end
+export type CartItemType = {
+  // id: number;
+  // category: string;
+  // description: string;
+  // image: string;
+  // price: number;
+  // title: string;
+  // amount: number;
+  // reviews: string[];
+  productId: string;
+  description: string;
+  price: number;
+  reviews: string[];
+  average_review_rate: number;
+  image_link: string;
+  //myAdd
+  amount: number;
+  title: string;
+};
+
 
