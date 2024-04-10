@@ -3,6 +3,8 @@ import { styled } from '@mui/material/styles';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { SignUpRequest, SignUpResponse } from '../../models/models';
+import { baseUrl, postRequestOptions } from '../../common/cookie';
+import axios from 'axios';
 
 const SignUpContainer = styled(Box)(({ theme }) => ({
 maxWidth: '400px',
@@ -48,21 +50,23 @@ const handleProfileImageLinkChange = (event: React.ChangeEvent<HTMLInputElement>
 setProfileImageLink(event.target.value);
 };
 
-const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-event.preventDefault();
-const fakeSignUpRequest: SignUpRequest = {
-    username: 'fakeuser',
-    password: 'fakepassword',
-    type: 'normal',
-};
-const signUpRequest: SignUpRequest = {
-    username,
-    password,
-    type: 'normal',
+async function handleSubmit(event: any) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    try {
+      let auth: any = await axios.post(baseUrl + "signup", formData, postRequestOptions);
+      console.log(auth);
+      if (auth.data.status == 200) {
+        localStorage.setItem("token", auth.data.token);
+        window.location.href = "/login";
+      } else {
+        console.log(auth.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
 
-};
-
-};
+  }
 
 return (
 <SignUpContainer>
@@ -109,7 +113,7 @@ return (
         <InputLabel id="accountType-label">Account Type</InputLabel>
         <Select
         labelId="accountType-label"
-        id="accountType"
+        name="account_type"
         value={accountType}
         label="Account Type"
         >
@@ -122,7 +126,7 @@ return (
         fullWidth
         id="profileImageLink"
         label="Profile Image Link"
-        name="profileImageLink"
+        name="profile_image_link"
         autoComplete="url"
         value={profileImageLink}
         onChange={handleProfileImageLinkChange}
@@ -135,14 +139,7 @@ return (
     >
         Sign Up
     </FormButton>
-    <Box sx={{ display: 'flex', justifyContent: 'left', gap: 1, mt: 2 }}>
-        <Button component={Link} to="/login" variant="outlined">
-        Login
-        </Button>
-        <Button component={Link} to="/" variant="outlined">
-        Home
-        </Button>
-    </Box>
+   
     </Box>
 </SignUpContainer>
 );

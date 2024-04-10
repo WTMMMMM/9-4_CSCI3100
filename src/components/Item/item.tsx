@@ -5,9 +5,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Wrapper } from "./item.styles";
 import { Dialog, DialogContent, DialogTitle, Grid, Typography } from "@material-ui/core";
 import { CartItemType } from "../../models/models";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 
-import React from "react"
-import { CartIcon } from "../../common/functions";
+import React from "react";
 
 const useStyles = makeStyles({
   dialog: {
@@ -48,9 +49,9 @@ const Item: React.FC<Props> = ({ item, handleAddToCart }) => {
   return (
     <Wrapper>
       <Grid>
-        <IconButton onClick={() => setLiked(!liked)}>{<CartIcon/>}</IconButton>
+      <IconButton onClick={() => setLiked(!liked)}>{liked ? <FavoriteIcon color="secondary" /> : <FavoriteBorderIcon />}</IconButton>
         <div onClick={handleClickOpen}>
-          <img src={item.image_link} alt={item.title} />
+          <img src={item.image_link}  className="product-image"alt={item.title} />
           <div>
             <h3>{item.title}</h3>
             {/* <p>{item.description}</p> */}
@@ -68,7 +69,6 @@ const Item: React.FC<Props> = ({ item, handleAddToCart }) => {
           </DialogTitle>
           <DialogContent>
             <img src={item.image_link} alt={item.title} style={{ width: "100%" }} />
-            {/* Below is the description and price */}
             <div className={classes.des_priceSection}>
               <p>Description: {item.description}</p>
               <h3>${item.price}</h3>
@@ -79,10 +79,10 @@ const Item: React.FC<Props> = ({ item, handleAddToCart }) => {
               <p>Review Section:</p>
               <p>
                 {item.reviews.map((review: string, index: number) => {
-                  return <p key={index}>{review}</p>;
+                  return <p key={index}>{index + 1 + ". " + review}</p>;
                 })}
               </p>
-              <h3>Rating:{item.average_review_rate}</h3>
+              <h3>Average Rating: {Math.round(item.average_review_rate * 10) / 10}</h3>
             </div>
           </DialogContent>
         </Dialog>

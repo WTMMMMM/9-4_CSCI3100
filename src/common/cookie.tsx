@@ -7,7 +7,7 @@ export const getRequestOptions: any = {
     Authorization: `Bearer ${token}`,
   },
 };
-export let baseUrl = "https://localhost:8080/api/web/";
+export let baseUrl = "http://localhost:8080/api/web/";
 
 export const postRequestOptions: any = {
   method: "POST",

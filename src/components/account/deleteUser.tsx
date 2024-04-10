@@ -1,138 +1,92 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 import { User } from "../../models/models";
+import NavBar from "../../common/navbar";
+import { baseUrl, getRequestOptions, handleAuth, postRequestOptions } from "../../common/cookie";
+import axios from "axios";
 
-function UsersTable({ data, onSelect }: any) {
+function UsersTable({ users, onSelect }: any) {
   return (
     <table className="table table-striped table-hover transparent-table">
       <thead className="thead-dark">
         <tr>
           <th scope="col">Username</th>
           <th scope="col">Address</th>
-
           <th scope="col">Account Type</th>
-
-          <th scope="col">Num of Products P. </th>
-
         </tr>
       </thead>
       <tbody>
-        {data.map((user: any) => (
+        {users.map((user: any) => (
           <tr key={user.username} onClick={() => onSelect(user)}>
             <td>{user.username}</td>
             <td>{user.address}</td>
             <td>{user.account_type}</td>
-            <td>{user.products.length}</td>
-
-
           </tr>
         ))}
       </tbody>
-    </table>);
-}
-
-function Highlight({ User, onDelete }: any) {
-
-  if (!User) {
-    return null;
-  }
-
-  const handleDelete = async () => {
-    if (window.confirm('Are you sure you want to delete this user?')) {
-      try {
-        const response = await fetch(`api`, {
-          method: 'DELETE',
-        });
-
-        const data = await response.json();
-        if (data.message === 'success') {
-          onDelete(User.username);
-          alert('deleted successfully');
-        } else {
-          alert('Failed to delete');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    }
-  };
-
-  return (
-    <form onSubmit={handleDelete} className="Highlight-form">
-      <h1>The User Selecting</h1>
-      <div>Username: <b>{User.username}</b></div>
-      <div>Address: <b>{User.address}</b></div>
-      <div>Account Type: <b>{User.account_type}</b></div>
-      <div>Num of Products P: <b>{User.products.length}</b></div>
-      <button type="button" className="btn btn-danger highlight-btn">Delete</button>
-    </form>
-
+    </table>
   );
 }
 
+function Highlight({ User }: any) {
+  if (!User) {
+    return null;
+  }
+  const handleDelete = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault(); // Prevent form submission if it's inside a form
+
+    const username = User.username;
+    if (window.confirm("Are you sure you want to delete " + username + "?")) {
+      const url = baseUrl+ "delete-user"; // Replace with your actual base URL
+      const formData = new FormData();
+      formData.append("username", username);
+
+      try {
+        const action = await axios.post(url, formData, postRequestOptions); // Replace with your actual request options if needed
+        if (action.status == 200) {
+          alert("Deleted successfully");
+          window.location.reload();
+        } else {
+          alert("Failed to delete");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred while deleting the user.");
+      }
+    }
+  };
+  return (
+    <form className="Highlight-form">
+      <div>
+        Username: <b>{User.username}</b>
+      </div>
+      <div>
+        Address: <b>{User.address}</b>
+      </div>
+      <div>
+        Account Type: <b>{User.account_type}</b>
+      </div>
+      
+      <button type="button" onClick={handleDelete} className="btn btn-danger highlight-btn">
+        Delete
+      </button>
+    </form>
+  );
+}
 
 function DeleteUser() {
-  const [data, setdata] = useState<User[]>([
-    {
-      username: "adminUser123",
-      password: "securePassword1!", // Remember, never store passwords as plain text in real applications.
-      address: "123 Admin Blvd, Admin City, AC 12345",
-      account_type: "admin" as "admin" | "normal",
-      profile_image_link: "https://example.com/images/admin_profile.jpg",
-      products: [
-
-      ],
-    },
-    {
-      username: "userStandard01",
-      password: "passwordStrong2!", // Reminder: Use proper encryption for real passwords.
-      address: "101 User Lane, Usersville, US 10101",
-      account_type: "normal" as "admin" | "normal",
-      profile_image_link: "https://example.com/images/user_profile_01.jpg",
-      products: [],
-    },
-    {
-      username: "userStandard02",
-      password: "passwordStrong3!", // Reminder: Use proper encryption for real passwords.
-      address: "102 User Road, Usersburg, US 10202",
-      account_type: "normal" as "admin" | "normal",
-      profile_image_link: "https://example.com/images/user_profile_02.jpg",
-      products: [],
-    },
-    {
-      username: "userStandard03",
-      password: "passwordStrong4!", // Reminder: Use proper encryption for real passwords.
-      address: "103 User Street, Userstown, US 10303",
-      account_type: "normal" as "admin" | "normal",
-      profile_image_link: "https://example.com/images/user_profile_03.jpg",
-      products: [],
-    },
-    {
-      username: "userStandard04",
-      password: "passwordStrong5!", // Reminder: Use proper encryption for real passwords.
-      address: "104 User Avenue, Usersfield, US 10404",
-      account_type: "normal" as "admin" | "normal",
-      profile_image_link: "https://example.com/images/user_profile_04.jpg",
-      products: [],
-    },
-    {
-      username: "userStandard05",
-      password: "passwordStrong6!", // Reminder: Use proper encryption for real passwords.
-      address: "105 User Blvd, Usersport, US 10505",
-      account_type: "normal" as "admin" | "normal",
-      profile_image_link: "https://example.com/images/user_profile_05.jpg",
-      products: [],
-    }
-  ]);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-
-  // useEffect(() => {
-  //     fetch('api')
-  //       .then(res => res.json())
-  //       .then(data => {
-  //         setdata(data);
-  //       })
-  //       .catch(error => console.error('Error fetching events:', error));
-  //   }, []);
+  let [users, setUsers] = useState([]);
+  let url = baseUrl + "users";
+  useEffect(() => {
+    fetch(url, getRequestOptions)
+      .then((res) => {
+        handleAuth(res.status);
+        return res.json();
+      })
+      .then((data) => {
+        setUsers(data);
+      });
+  }, []);
 
   const handleSelect = (user: any) => {
     if (selectedUser && selectedUser.username === user.username) {
@@ -142,29 +96,20 @@ function DeleteUser() {
     }
   };
 
-  const handleDelete = async (username: any) => {
-    window.location.reload();
-  };
-
   return (
     <div>
+      <NavBar />
       <div>
-        <div className="table-title">
+        <div className="analytics-title">
           <h1>Users</h1>
         </div>
         <div className="table-container">
-          <UsersTable data={data} onSelect={handleSelect} />
+          <UsersTable users={users} onSelect={handleSelect} />
         </div>
-        {selectedUser && (
-          <div className="Highlight">
-            {selectedUser && (
-              <Highlight User={selectedUser} onDelete={handleDelete} />
-            )}
-          </div>
-        )}
+        {selectedUser && <div className="Highlight">{selectedUser && <Highlight User={selectedUser} />}</div>}
       </div>
     </div>
-  )
+  );
 }
 
-export default DeleteUser
+export default DeleteUser;

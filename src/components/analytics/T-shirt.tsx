@@ -24,6 +24,16 @@ ChartJS.register(
 
 export const options = {
   responsive: true,
+  scales: {
+    y: { // 'yAxes' is now just 'y' in Chart.js 3.x
+        beginAtZero: true,
+        max: 40,
+        min: 0,
+        ticks: {
+            stepSize: 10
+        }
+    }
+},
   plugins: {
     legend: {
       position: 'top' as const,

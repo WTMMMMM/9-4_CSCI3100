@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import AdminPage from "../components/account/admin";
 import PostAProduct from "../components/account/postAProduct";
-import NormalPage from "../components/account/normal";
 import DeleteUser from "../components/account/deleteUser";
 import React from "react";
 import Analytics from "../components/analytics/analytics";
@@ -10,34 +9,30 @@ import SignUpPage from "../components/signup/signup";
 import MainPage from "../components/products/main";
 
 const router = createBrowserRouter([
-    {
-        path: "/AdminPage",
-        element: <AdminPage />
-    },  {
+   {
         path: "/",
         element: <MainPage />
     },
-
+    {
+        path: "/analytics",
+        element: <Analytics />,
+    },
+    {
+        path: "/profile",
+        element: <AdminPage />
+    }, 
     {
         path: "/PostAProduct",
         element: <PostAProduct />
     },
 
-    {
-        path: "/NormalPage",
-        element: <NormalPage />
-    },
+ 
 
     {
         path: "/DeleteUser",
         element: <DeleteUser />
     },
 
-   
-    {
-        path: "/analytics",
-        element: <Analytics />,
-    },
     {
         path: "/login",
         element: <LoginPage />, // Add this line to define the route for LoginPage

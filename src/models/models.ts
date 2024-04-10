@@ -1,12 +1,15 @@
 //Jacky
 
 export interface ProductInfo {
-  productId: string;
+  "_id": string;
   description: string;
   price: number;
-  review: string[];
+  reviews: string[];
   average_review_rate: number;
   image_link: string;
+  title: string;
+  category: string;
+
 }
 
 //Ming
@@ -76,6 +79,8 @@ export interface PostAProduct {
   price: number;
   image_link: string;
   category: string;
+  title: string;
+
 }
 
 export interface User {
@@ -96,7 +101,7 @@ export type CartItemType = {
   // title: string;
   // amount: number;
   // reviews: string[];
-  productId: string;
+  "_id": string;
   description: string;
   price: number;
   reviews: string[];
@@ -106,5 +111,3 @@ export type CartItemType = {
   amount: number;
   title: string;
 };
-
-
