@@ -16,14 +16,7 @@ type Props = {
 // const stripePromise = loadStripe("pk_live_51McXiVIHzRbJKq7fbHv9Nmb0kocd7K9h2HXzV6O1EHbWv4K9FaciqvDmx0v2wgYIQrg6EXYvAL8hB2F1PL37q3Me00W2q0EcPJ");
 
 const Cart: React.FC<Props> = ({ cartItems, addToCart, removeFromCart }) => {
-  // let [clientSecret, setClientSecret] = useState("");
-  // async function handlePayment(event: any, amount: string) {
-  //   let url = baseUrl + "initiate-payment";
-  //   let formData = new FormData();
-  //   formData.append("amount", amount);
-  //   let result: any = await axios.post(url, formData, postRequestOptions);
-  //   setClientSecret(result.data.clientSecret);
-  // }
+
   const calculateTotal = (items: CartItemType[]) => items.reduce((acc: number, item) => acc + item.amount * item.price, 0);
 
   const options = {
@@ -41,12 +34,7 @@ const Cart: React.FC<Props> = ({ cartItems, addToCart, removeFromCart }) => {
         <CartItem item={item} addToCart={addToCart} removeFromCart={removeFromCart} />
       ))}
       <h2>Total: ${calculateTotal(cartItems).toFixed(2)}</h2>
-      {/* <Button variant="contained" color="primary" onClick={(event) => handlePayment(event, calculateTotal(cartItems).toFixed(2))}>
-        Checkout
-      </Button>
-      <Elements stripe={stripePromise} options={options}>
-        <CheckoutForm />
-      </Elements> */}
+     
     </Wrapper>
   );
 };

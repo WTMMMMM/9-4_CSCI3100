@@ -72,7 +72,7 @@ const MainPage = () => {
           <input
             className="form-control mr-sm-2 filter-trades-search-bar"
             type="search"
-            placeholder="Search Trade By BB Ticker or ISIN"
+            placeholder="Search Product By Name and Category"
             aria-label="Search"
             onChange={(event) => {
               filterProducts(event);

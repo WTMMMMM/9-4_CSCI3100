@@ -92,10 +92,7 @@ function AdminPage() {
                   <label className="labels">Username</label>
                   <div>{user.username}</div>
                 </div>
-                <div className="col-md-12">
-                  <label className="labels">Email</label>
-                  <div>{user.email}</div>
-                </div>
+               
                 <div className="col-md-12">
                   <label className="labels">Address</label>
                   <div>{user.address}</div>

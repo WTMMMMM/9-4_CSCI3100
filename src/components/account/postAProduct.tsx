@@ -61,7 +61,7 @@ function PostAProduct({ data }: any) {
                   </div>
                   <div className="col-md-12">
                     <label className="labels">Description</label>
-                    <input type="text" className="form-control" placeholder="enter discription" name="description" required />
+                    <input type="text" className="form-control" placeholder="enter description" name="description" required />
                   </div>
                   <div className="col-md-12">
                     <label className="labels">Price</label>
@@ -69,7 +69,7 @@ function PostAProduct({ data }: any) {
                   </div>
                   <div className="col-md-12">
                     <label className="labels">Image_link</label>
-                    <input type="text" className="form-control" placeholder="enter imagelink" name="image_link" accept="image/*" required />
+                    <input type="text" className="form-control" placeholder="enter image link" name="image_link" accept="image/*" required />
                   </div>
 
                   <div className="col-md-12">

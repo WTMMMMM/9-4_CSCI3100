@@ -114,7 +114,7 @@ return (
         <Select
         labelId="accountType-label"
         name="account_type"
-        value={accountType}
+        // value={accountType}
         label="Account Type"
         >
         <MenuItem value="normal">Normal</MenuItem>

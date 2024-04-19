@@ -56,6 +56,7 @@ function LoginPage() {
       if (auth.data.status == 200) {
         window.location.href = "/";
       } else {
+        window.location.href = "/login";
       }
     } catch (error) {}
   }

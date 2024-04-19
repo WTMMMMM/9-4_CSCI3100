@@ -45,13 +45,12 @@ const Item: React.FC<Props> = ({ item, handleAddToCart }) => {
   };
 
   const classes = useStyles();
-
   return (
     <Wrapper>
       <Grid>
-      <IconButton onClick={() => setLiked(!liked)}>{liked ? <FavoriteIcon color="secondary" /> : <FavoriteBorderIcon />}</IconButton>
+        <IconButton onClick={() => setLiked(!liked)}>{liked ? <FavoriteIcon color="secondary" /> : <FavoriteBorderIcon />}</IconButton>
         <div onClick={handleClickOpen}>
-          <img src={item.image_link}  className="product-image"alt={item.title} />
+          <img src={item.image_link} className="product-image" alt={item.title} />
           <div>
             <h3>{item.title}</h3>
             {/* <p>{item.description}</p> */}
@@ -82,7 +81,7 @@ const Item: React.FC<Props> = ({ item, handleAddToCart }) => {
                   return <p key={index}>{index + 1 + ". " + review}</p>;
                 })}
               </p>
-              <h3>Average Rating: {Math.round(item.average_review_rate * 10) / 10}</h3>
+              <h3>Average Rating: {Math.round(item.average_review_rate * 10) / 10 || 0}</h3>
             </div>
           </DialogContent>
         </Dialog>
